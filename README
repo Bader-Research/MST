@@ -1,0 +1,37 @@
+/*
+ * mst: Parallel Minimum Spanning Forest codes
+ * Copyright (C) 1997-2004  David A. Bader
+ *
+ * Authors:             David A. Bader
+ *                      Guojing Cong
+ */
+
+This directory contains 4 implementations of parallel MST algorithms;
+3 of them are based on Boruvka's algorithm, the other one is based on
+the new approach designed for symmetric multiprocessors (SMPs). 
+
+INPUT: sparse graphs with weighted edges. The format of the input
+graph is:
+
+sparse\n
+number-of-vertices\n
+v1 w1 v2 w2\n 
+.
+.
+.
+
+where v1 is adjacent to vertex 0, and the corresponding edge has
+weight w1, and so on.
+
+An example for a graph with 2 vertices and one edge with weight 10:
+sparse
+1 10
+0 10
+
+Usage: MST -t <number-of-threads> -- <input-graph>
+dependency: parallel sample sort, non-recursive merge sort
+
+Steps: The Boruvka algorithms follow the find-min,
+connected-component, compact-graph procedure.  For the new approach
+(MST-BC), each processor runs a local Prim's algorithm until the
+sub-trees grown by them start to touch with each other.
